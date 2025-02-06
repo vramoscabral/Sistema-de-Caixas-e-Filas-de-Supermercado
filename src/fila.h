@@ -7,7 +7,7 @@
 #include <string.h>
 #include "cliente.h"
 
-#define MAX_CAIXAS 5
+#define MAX_CAIXAS 4
 
 typedef short int si;
 
@@ -31,5 +31,7 @@ void imprimirfila(FilaPrioridade *fila);
 si filaVazia(FilaPrioridade *fila);
 si quantclientes(FilaPrioridade *fila);
 bool existeCpf(Caixa *caixas, int numcaixas, char *cpf);
+void liberarFila(FilaPrioridade *fila);
+bool mercadoVazio(Caixa *caixas);
 
 #endif

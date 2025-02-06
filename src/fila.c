@@ -24,6 +24,14 @@ si escolherCaixa(Caixa *caixas, si tipo) {
                     printf("%d   ",i+1);
             }
         }
+        else if (tipo == 2) {
+            printf("\nCAIXAS COM CLIENTES EM ESPERA: ");
+            for (int i=0; i < MAX_CAIXAS; i++)
+            {
+                if (caixas[i].estado && quantclientes(&caixas[i].fila) > 0)
+                    printf("%d  ",i+1);
+            }
+        }
         else {
             printf("\nCAIXAS ABERTOS: ");
             for (int i=0; i < MAX_CAIXAS; i++)
@@ -48,6 +56,15 @@ si escolherCaixa(Caixa *caixas, si tipo) {
                 printf("Erro: Entrada invalida. Tente novamente.\n");
                 while (getchar() != '\n');
             } else if (caixas[numcaixa-1].estado || numcaixa < 1 || numcaixa > 5) {
+                printf("Erro: Escolha um caixa disponivel.\n");
+                resultado = 0;
+            }
+        }
+        else if (tipo == 2) {
+            if (resultado != 1) {
+                printf("Erro: Entrada invalida. Tente novamente.\n");
+                while (getchar() != '\n');
+            } else if (!caixas[numcaixa-1].estado || quantclientes(&caixas[numcaixa-1].fila) == 0 || numcaixa < 1 || numcaixa > 5) {
                 printf("Erro: Escolha um caixa disponivel.\n");
                 resultado = 0;
             }
@@ -158,11 +175,15 @@ void imprimirfila(FilaPrioridade *fila) {
     Cliente *atual = fila->inicio;
     si cl = 1;
     while (atual != NULL) {
-        printf("\nCliente %hd: ",cl);
-        printf("nome: %s,",atual->nome);
-        printf("cpf: %s,",atual->cpf);
-        printf("prioridade: %hd, ",atual->prioridade);
-        printf("itens: %hd\n",atual->itens);
+        printf("\nCliente %hd -> ",cl);
+        printf("Prioridade: %hd / ",atual->prioridade);
+        printf("Nome: %s / ",atual->nome);
+        printf("CPF: %c%c%c.%c%c%c.%c%c%c-%c%c / ", 
+               atual->cpf[0], atual->cpf[1], atual->cpf[2], 
+               atual->cpf[3], atual->cpf[4], atual->cpf[5], 
+               atual->cpf[6], atual->cpf[7], atual->cpf[8], 
+               atual->cpf[9], atual->cpf[10]);
+        printf("Itens: %hd\n",atual->itens);
         atual = atual->prox;
         cl++;
     }
@@ -208,4 +229,26 @@ bool existeCpf(Caixa *caixas, int numcaixas, char *cpf) {
         }
     }
     return false;
+}
+
+void liberarFila(FilaPrioridade *fila) {
+    Cliente *atual = fila->inicio;
+    while (atual != NULL) {
+        Cliente *prox = atual->prox;
+        free(atual);
+        atual = prox;
+    }
+    fila->inicio = NULL;
+    fila->fim = NULL;
+}
+
+bool mercadoVazio(Caixa* caixas) {
+    int quant = 0;
+    for (int i = 0; i < MAX_CAIXAS; i++) {
+        quant = quantclientes(&caixas[i].fila);
+        if (quant > 0) {
+            return false;
+        }
+    }
+    return true;
 }
