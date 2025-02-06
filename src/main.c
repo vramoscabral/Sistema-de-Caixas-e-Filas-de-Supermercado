@@ -131,7 +131,7 @@ int main() {
                 printf("Encerrando o programa...\n");
                 return 0;
             default:
-                printf("Opcao invalida. Escolha de 0 a 4.\n");
+                printf("Opcao invalida. Escolha de 0 a 5.\n");
                 break;
         }
     }
