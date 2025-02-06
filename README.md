@@ -1,10 +1,14 @@
 # Sistema de Caixas e Filas de Supermercado
 Trabalho de complementação de Programação de Computadores 1.
-
-Possui um arquivo Makefile para execução em Linux ou WSL.
-Para executar em Windows abra a pasta src no terminal e coloque no comando de execução os 5 arquivos da pasta.
-
 Programa desenvolvido em linguagem C.
+
+Para executar em ambiente Windows abra a pasta src no terminal e coloque no comando de execução os 3 arquivos com final ".c" da pasta.
+
+Exemplo: gcc -o run main.c cliente.c fila.c
+./run
+
+Possui um arquivo Makefile para execução em ambiente Linux ou WSL.
+
 Ao baixar a pasta do repositório, abra a pasta no terminal e execute o arquivo Makefile.
 Basta digitar no terminal: make clean && make && make run.
 
